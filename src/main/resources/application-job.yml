@@ -1,0 +1,8 @@
+server:
+  port: 8089
+spring:
+  kafka:
+    consumer:
+      send-notify-priority: send-notify-medium
+      max-poll-records: 10
+      fetch-max-wait: 1000

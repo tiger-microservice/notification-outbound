@@ -1,0 +1,27 @@
+server:
+  port: 8087
+  servlet:
+    context-path: /notification-outbound
+
+spring:
+  application:
+    name: notification-outbound
+  banner:
+    location: tiger-banner.txt
+  profiles:
+    active: dev
+  kafka:
+    streams:
+      bootstrap-servers: localhost:9092
+      application-id: notification-outbound
+    bootstrap-servers: localhost:9092
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+      group-id: notification-outbound
+      max-poll-records: 10
+    producer:
+      bootstrap-servers: localhost:9092
