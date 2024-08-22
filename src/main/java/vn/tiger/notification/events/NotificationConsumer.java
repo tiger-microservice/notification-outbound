@@ -30,7 +30,7 @@ public class NotificationConsumer {
     final ObjectMapper objectMapper;
 
     @KafkaListener(
-            topics = {"${spring.kafka.consumer.send-notify-priority}"},
+            topics = {"${spring.kafka.consumer.send-notify-priority:send-notify-priority}"},
             groupId = "${spring.kafka.consumer.group-id}",
             batch = "true"
     )
@@ -48,6 +48,26 @@ public class NotificationConsumer {
                 this.taskExecutor.execute(() -> {
                     notificationAdapterProducer.sendNotify(input);
                 });
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+    }
+
+    @KafkaListener(
+            topics = {"${spring.kafka.consumer.send-notify-job:send-notify-job}"},
+            groupId = "${spring.kafka.consumer.group-id}",
+            batch = "true"
+    )
+    public void consumeNotifyByJob(@Payload List<String> messages,
+                                      @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+                                      @Header(KafkaHeaders.GROUP_ID) String groupId) {
+        for (int i = 0; i < messages.size(); i++) {
+            String message = messages.get(i);
+            try {
+                String type = objectMapper.readTree(message).get("type").asText();
+                NotificationInput input = getNotificationInput(type, message);
+                // run job
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }

@@ -21,4 +21,5 @@ public class NotificationInput {
     String receive;
     ProcessStatus processStatus;
     String errorMsg;
+    String cronJob;
 }
