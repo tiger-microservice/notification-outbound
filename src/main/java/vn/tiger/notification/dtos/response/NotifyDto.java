@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Data
 @Builder
-@FieldDefaults(level = AccessLevel.PACKAGE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotifyDto {
     String id;
     String title;
