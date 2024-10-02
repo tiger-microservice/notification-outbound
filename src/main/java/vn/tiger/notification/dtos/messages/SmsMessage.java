@@ -5,8 +5,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import vn.tiger.notification.dtos.request.NotificationInput;
 
-import java.util.Map;
-
 @Data
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
